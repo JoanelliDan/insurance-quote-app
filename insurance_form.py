@@ -4,6 +4,23 @@ from datetime import date
 
 st.set_page_config(page_title="Insurance Quote Platform", layout="wide")
 
+# Custom Styles
+st.markdown(
+    """
+    <style>
+    .main {background-color: #F0F8FF;}
+    .stButton>button {background-color: #004488; color: white; font-size: 18px; border-radius: 10px;}
+    .stTextInput>div>div>input {border-radius: 5px;}
+    .stSelectbox>div>div>select {border-radius: 5px;}
+    .stNumberInput>div>div>input {border-radius: 5px;}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Add Logo
+st.sidebar.image("https://worldvectorlogo.com/pt/logo/allianz-1", use_column_width=True)
+
 st.title("Cotação (Facility) - RD Equipamentos")
 
 # Sidebar for customer & policy info
@@ -49,18 +66,21 @@ equipments = []
 total_price = 0.0
 
 for i in range(num_equipments):
-    st.subheader(f"Equipment {i+1}")
-    equipment_type = st.selectbox(f"Tipo", list(basic_equipment_types.keys()), key=f"type_{i}")
-    equipment_usage = st.selectbox(f"Utilização", list(basic_equipment_usages.keys()), key=f"usage_{i}")
-    equipment_year = st.number_input(f"Ano de Fabricação", min_value=1900, max_value=2050, step=1, key=f"year_{i}")
-    equipment_value = st.number_input(f"Valor do Equipamento", min_value=0.0, step=100.0, key=f"value_{i}")
-    equipment_rented = st.radio(f"Equipamento Alugado?", ("Yes", "No"), key=f"rented_{i}")
+    st.subheader(f"Equipamento {i+1}")
+    col1, col2 = st.columns(2)
+    with col1:
+        equipment_type = st.selectbox("Tipo", list(basic_equipment_types.keys()), key=f"type_{i}")
+        equipment_usage = st.selectbox("Utilização", list(basic_equipment_usages.keys()), key=f"usage_{i}")
+    with col2:
+        equipment_year = st.number_input("Ano de Fabricação", min_value=1900, max_value=2050, step=1, key=f"year_{i}")
+        equipment_value = st.number_input("Valor do Equipamento", min_value=0.0, step=100.0, key=f"value_{i}")
+    equipment_rented = st.radio("Equipamento Alugado?", ("Yes", "No"), key=f"rented_{i}")
     
     # Coverage Inputs
     st.subheader("Coberturas:")
-    basic_si = st.number_input(f"Cobertura Básica", min_value=0.0, max_value=equipment_value, step=100.0, key=f"basic_{i}")
-    theft_si = st.number_input(f"Cobertura Roubo", min_value=0.0, max_value=basic_si, step=100.0, key=f"theft_{i}")
-    electrical_si = st.number_input(f"Cobertura Danos Elétricos", min_value=0.0, max_value=basic_si, step=100.0, key=f"electrical_{i}")
+    basic_si = st.number_input("Cobertura Básica", min_value=0.0, max_value=equipment_value, step=100.0, key=f"basic_{i}")
+    theft_si = st.number_input("Cobertura Roubo", min_value=0.0, max_value=basic_si, step=100.0, key=f"theft_{i}")
+    electrical_si = st.number_input("Cobertura Danos Elétricos", min_value=0.0, max_value=basic_si, step=100.0, key=f"electrical_{i}")
     
     # Equipment Type & Usage Options for Coverages
     basic_type_factor = basic_equipment_types[equipment_type]
@@ -84,18 +104,17 @@ for i in range(num_equipments):
     total_price += total_equipment_price
     
     equipments.append({
-        "Type": equipment_type,
-        "Usage": equipment_usage,
-        "Year": equipment_year,
-        "Value": equipment_value,
-        "Rented": equipment_rented,
-        "Basic SI": basic_si,
-        "Theft SI": theft_si,
-        "Electrical SI": electrical_si,
-        "Total Price": total_equipment_price
+        "Tipo": equipment_type,
+        "Utilização": equipment_usage,
+        "Ano": equipment_year,
+        "Valor": equipment_value,
+        "Alugado": equipment_rented,
+        "Cobertura Básica": basic_si,
+        "Cobertura Roubo": theft_si,
+        "Cobertura Danos Elétricos": electrical_si,
+        "Preço Total": total_equipment_price
     })
 
-# Submit Button
 if st.button("Realizar Cotação"):
     df = pd.DataFrame(equipments)
     st.write("### Resumo")
