@@ -19,7 +19,7 @@ st.markdown(
 )
 
 # Add Logo
-st.sidebar.image("https://via.placeholder.com/200x100", use_container_width=True)
+st.sidebar.image("https://cdn.iconscout.com/icon/free/png-512/free-allianz-logo-icon-download-in-svg-png-gif-file-formats--company-brand-world-logos-vol-6-pack-icons-282695.png?f=webp&w=256", use_container_width=True)
 
 st.title("Cotação (Facility) - RD Equipamentos")
 
