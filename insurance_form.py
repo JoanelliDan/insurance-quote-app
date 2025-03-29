@@ -19,7 +19,7 @@ st.markdown(
 )
 
 # Add Logo
-st.sidebar.image("https://worldvectorlogo.com/pt/logo/allianz-1", use_column_width=True)
+st.sidebar.image("https://via.placeholder.com/200x100", use_container_width=True)
 
 st.title("Cotação (Facility) - RD Equipamentos")
 
@@ -121,3 +121,4 @@ if st.button("Realizar Cotação"):
     st.write(df)
     st.write(f"## Preço Total: R${total_price:,.2f}")
     st.success("Cotação Gerada com Sucesso!")
+
