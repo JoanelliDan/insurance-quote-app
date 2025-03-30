@@ -104,7 +104,7 @@ for i in range(num_equipments):
         equipment_type = st.selectbox("Tipo", list(basic_equipment_types.keys()), key=f"type_{i}")
         equipment_usage = st.selectbox("Utilização", list(basic_equipment_usages.keys()), key=f"usage_{i}")
     with col2:
-        equipment_year = st.number_input("Ano de Fabricação", min_value=1900, max_value=2050, step=1, key=f"year_{i}")
+        equipment_year = st.number_input("Ano de Fabricação", min_value=2000, max_value=2050, step=1, key=f"year_{i}")
         equipment_value = st.number_input("Valor do Equipamento", min_value=0.0, step=100.0, key=f"value_{i}")
     equipment_rented = st.radio("Equipamento Alugado?", ("Yes", "No"), key=f"rented_{i}")
     
