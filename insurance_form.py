@@ -4,11 +4,6 @@ from datetime import date
 
 st.set_page_config(page_title="Insurance Quote Platform", layout="wide")
 
-# Initialize/reset form state
-if "clear_form" not in st.session_state:
-    st.session_state.clear_form = False
-if "test_data" not in st.session_state:
-    st.session_state.test_data = False
 
 # Custom Styles
 st.markdown(
@@ -24,7 +19,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Sidebar
+# Sidebar now only shows Ajustes
 with st.sidebar:
     st.image("https://cdn.iconscout.com/icon/free/png-512/free-allianz-logo-icon-download-in-svg-png-gif-file-formats--company-brand-world-logos-vol-6-pack-icons-282695.png?f=webp&w=256", use_container_width=True)
     st.header("Ajustes:")
@@ -35,36 +30,6 @@ with st.sidebar:
 # Main Title & Logo
 st.image("https://cdn.iconscout.com/icon/free/png-512/free-allianz-logo-icon-download-in-svg-png-gif-file-formats--company-brand-world-logos-vol-6-pack-icons-282695.png?f=webp&w=256", use_column_width=False)
 st.title("Cotação (Facility) - RD Equipamentos")
-
-# Clear/Test Buttons
-col_a, col_b = st.columns(2)
-with col_a:
-    if st.button("🧹 Limpar Campos"):
-        st.session_state.clear_form = True
-        st.experimental_rerun()
-with col_b:
-    if st.button("🧪 Preencher com Dados de Teste"):
-        st.session_state.test_data = True
-        st.experimental_rerun()
-
-# Test data values
-test_values = {
-    "name": "João Silva",
-    "id": "123.456.789-00",
-    "phone": "(11) 91234-5678",
-    "email": "joao@teste.com",
-    "start_date": date(2025, 5, 1),
-    "end_date": date(2026, 5, 1),
-    "previous_policy": "ABC1234567",
-}
-
-# Clear/test logic
-def get_value(field):
-    if st.session_state.clear_form:
-        return "" if isinstance(test_values[field], str) else date.today()
-    elif st.session_state.test_data:
-        return test_values[field]
-    return "" if isinstance(test_values[field], str) else date.today()
 
 # Customer and Policy Information
 st.header("Informações do Segurado:")
