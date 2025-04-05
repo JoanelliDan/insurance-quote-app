@@ -2,8 +2,11 @@ import streamlit as st
 import pandas as pd
 from datetime import date
 
-st.set_page_config(page_title="Insurance Quote Platform", layout="wide")
-
+st.set_page_config(
+    page_title="Insurance Quote Platform",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
 # Custom Styles
 st.markdown(
@@ -28,7 +31,7 @@ with st.sidebar:
     surcharge = st.slider("Agravo (%)", min_value=0, max_value=100, value=0)
 
 # Main Title & Logo
-st.image("https://cdn.iconscout.com/icon/free/png-512/free-allianz-logo-icon-download-in-svg-png-gif-file-formats--company-brand-world-logos-vol-6-pack-icons-282695.png?f=webp&w=256", use_column_width=False)
+st.image("https://cdn.iconscout.com/icon/free/png-512/free-allianz-logo-icon-download-in-svg-png-gif-file-formats--company-brand-world-logos-vol-6-pack-icons-282695.png?f=webp&w=256", use_container_width=False)
 st.title("Cotação (Facility) - RD Equipamentos")
 
 # Customer and Policy Information
