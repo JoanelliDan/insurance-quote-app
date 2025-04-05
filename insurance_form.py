@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import date
 
 # Load broker data from CSV
-brokers_df = pd.read_csv("brokers.csv")
+brokers_df = pd.read_csv("brokers.csv", sep=";")
 
 # Initialize session state
 if "authenticated" not in st.session_state:
