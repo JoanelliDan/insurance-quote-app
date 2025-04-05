@@ -24,8 +24,8 @@ st.markdown(
 
 # Sidebar now only shows Ajustes
 with st.sidebar:
-    st.image("https://cdn.iconscout.com/icon/free/png-512/free-allianz-logo-icon-download-in-svg-png-gif-file-formats--company-brand-world-logos-vol-6-pack-icons-282695.png?f=webp&w=256", use_container_width=True)
-    st.header("Ajustes:")
+    #st.image("https://cdn.iconscout.com/icon/free/png-512/free-allianz-logo-icon-download-in-svg-png-gif-file-formats--company-brand-world-logos-vol-6-pack-icons-282695.png?f=webp&w=256", use_container_width=True)
+    st.header("Ajustes Comerciais:")
     commission = st.slider("Comissão (%)", min_value=5, max_value=25, value=15)
     discount = st.slider("Desconto (%)", min_value=0, max_value=15, value=0)
     surcharge = st.slider("Agravo (%)", min_value=0, max_value=100, value=0)
@@ -87,15 +87,14 @@ for i in range(num_equipments):
         equipment_usage = st.selectbox("Utilização", list(basic_equipment_usages.keys()), key=f"usage_{i}")
     with col2:
         equipment_year = st.number_input("Ano de Fabricação", min_value=2000, max_value=date.today().year, value=date.today().year, step=1, key=f"year_{i}")
-        equipment_value = st.number_input("Valor do Equipamento (R$)", min_value=0.0, step=100.0,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), key=f"value_{i}"
-)
+        equipment_value = st.number_input("Valor do Equipamento (R$)", min_value=0.0, step=100.0, format="%.0f", key=f"value_{i}")
     
     equipment_rented = st.radio("Equipamento Alugado?", ("Yes", "No"), key=f"rented_{i}")
     
     st.subheader("Coberturas:")
-    basic_si = st.number_input("Cobertura Básica", min_value=0.0, max_value=equipment_value, step=100.0,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), key=f"basic_{i}")
-    theft_si = st.number_input("Cobertura Roubo", min_value=0.0, max_value=basic_si, step=100.0,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), key=f"theft_{i}")
-    electrical_si = st.number_input("Cobertura Danos Elétricos", min_value=0.0, max_value=basic_si,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), step=100.0, key=f"electrical_{i}")
+    basic_si = st.number_input("Cobertura Básica", min_value=0.0, max_value=equipment_value, step=100.0, format="%.0f", key=f"basic_{i}")
+    theft_si = st.number_input("Cobertura Roubo", min_value=0.0, max_value=basic_si, step=100.0, format="%.0f", key=f"theft_{i}")
+    electrical_si = st.number_input("Cobertura Danos Elétricos", min_value=0.0, max_value=basic_si, format="%.0f", step=100.0, key=f"electrical_{i}")
     
     # Calculate pricing
     age_factor = 1 + (2025 - equipment_year) * 0.01
@@ -134,9 +133,6 @@ if st.button("Realizar Cotação"):
         st.write("### Resumo da Cotação")
         st.dataframe(df)
         st.metric("Preço Base Total", f"R${total_price:,.2f}")
-        st.metric("Preço Ajustado (com desconto/agravo)", f"R${adjusted_price:,.2f}")
-        st.metric("Preço Final (com comissão)", f"R${final_price:,.2f}")
-        st.success("Cotação Gerada com Sucesso!")
         st.metric("Preço Ajustado (com desconto/agravo)", f"R${adjusted_price:,.2f}")
         st.metric("Preço Final (com comissão)", f"R${final_price:,.2f}")
         st.success("Cotação Gerada com Sucesso!")
