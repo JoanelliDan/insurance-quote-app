@@ -86,7 +86,7 @@ for i in range(num_equipments):
         equipment_type = st.selectbox("Tipo", list(basic_equipment_types.keys()), key=f"type_{i}")
         equipment_usage = st.selectbox("Utilização", list(basic_equipment_usages.keys()), key=f"usage_{i}")
     with col2:
-	equipment_year = st.number_input("Ano de Fabricação", min_value=2000, max_value=date.today().year, value=date.today().year, step=1, key=f"year_{i}")
+        equipment_year = st.number_input("Ano de Fabricação", min_value=2000, max_value=date.today().year, value=date.today().year, step=1, key=f"year_{i}")
         equipment_value = st.number_input("Valor do Equipamento (R$)", min_value=0.0, step=100.0,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), key=f"value_{i}"
 )
     
