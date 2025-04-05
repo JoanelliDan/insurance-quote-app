@@ -49,7 +49,7 @@ col1, col2 = st.columns(2)
 with col1:
     start_date = st.date_input("Data de Início de Vigência", date.today())
 with col2:
-    end_date = st.date_input("Data de Fim de Vigência", date.today())
+    end_date = st.date_input("Data de Fim de Vigência", date.today().replace(year=date.today().year + 1))
 
 previous_policy = st.text_input("Número da Apólice Anterior (em caso de Renovação Interna)")
 
@@ -86,15 +86,16 @@ for i in range(num_equipments):
         equipment_type = st.selectbox("Tipo", list(basic_equipment_types.keys()), key=f"type_{i}")
         equipment_usage = st.selectbox("Utilização", list(basic_equipment_usages.keys()), key=f"usage_{i}")
     with col2:
-        equipment_year = st.number_input("Ano de Fabricação", min_value=2000, max_value=2050, step=1, key=f"year_{i}")
-        equipment_value = st.number_input("Valor do Equipamento", min_value=0.0, step=100.0, key=f"value_{i}")
+	equipment_year = st.number_input("Ano de Fabricação", min_value=2000, max_value=date.today().year, value=date.today().year, step=1, key=f"year_{i}")
+        equipment_value = st.number_input("Valor do Equipamento (R$)", min_value=0.0, step=100.0,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), key=f"value_{i}"
+)
     
     equipment_rented = st.radio("Equipamento Alugado?", ("Yes", "No"), key=f"rented_{i}")
     
     st.subheader("Coberturas:")
-    basic_si = st.number_input("Cobertura Básica", min_value=0.0, max_value=equipment_value, step=100.0, key=f"basic_{i}")
-    theft_si = st.number_input("Cobertura Roubo", min_value=0.0, max_value=basic_si, step=100.0, key=f"theft_{i}")
-    electrical_si = st.number_input("Cobertura Danos Elétricos", min_value=0.0, max_value=basic_si, step=100.0, key=f"electrical_{i}")
+    basic_si = st.number_input("Cobertura Básica", min_value=0.0, max_value=equipment_value, step=100.0,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), key=f"basic_{i}")
+    theft_si = st.number_input("Cobertura Roubo", min_value=0.0, max_value=basic_si, step=100.0,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), key=f"theft_{i}")
+    electrical_si = st.number_input("Cobertura Danos Elétricos", min_value=0.0, max_value=basic_si,format="R$ %s" % "{:,.0f}".format(1000).replace(",", "X").replace(".", ",").replace("X", "."), step=100.0, key=f"electrical_{i}")
     
     # Calculate pricing
     age_factor = 1 + (2025 - equipment_year) * 0.01
@@ -133,6 +134,9 @@ if st.button("Realizar Cotação"):
         st.write("### Resumo da Cotação")
         st.dataframe(df)
         st.metric("Preço Base Total", f"R${total_price:,.2f}")
+        st.metric("Preço Ajustado (com desconto/agravo)", f"R${adjusted_price:,.2f}")
+        st.metric("Preço Final (com comissão)", f"R${final_price:,.2f}")
+        st.success("Cotação Gerada com Sucesso!")
         st.metric("Preço Ajustado (com desconto/agravo)", f"R${adjusted_price:,.2f}")
         st.metric("Preço Final (com comissão)", f"R${final_price:,.2f}")
         st.success("Cotação Gerada com Sucesso!")
