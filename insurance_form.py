@@ -70,9 +70,9 @@ electrical_equipment_types = {"Trator": 0.8, "Escavadeira": 1.2, "Retroescavadei
 electrical_equipment_usages = {"Indústria": 0.9, "Construção": 0.7, "Comércio": 1.2, "Demais": 1.5}
 
 coverage_factors = {
-    "Basic": 1.0,
-    "Theft": 0.5,
-    "Electrical": 0.3
+    "Basic": 0.01,
+    "Theft": 0.005,
+    "Electrical": 0.002
 }
 
 num_equipments = st.number_input("Número de Equipamentos", min_value=1, max_value=50, value=1)
