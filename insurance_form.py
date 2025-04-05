@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from datetime import data
+from datetime import date
 
 # Load broker data
 brokers_df = pd.read_csv("brokers.csv", sep=";")
